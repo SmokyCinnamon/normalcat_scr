@@ -1,0 +1,27 @@
+OnAiTalk
+{
+	if CHAIN.IDName == ""
+	{
+		LastTalk = RandomTalk
+	}
+	else
+	{
+		LastTalk = ChainTalk
+	}
+	LastTalk
+}
+
+RandomTalk : nonoverlap_pool
+{
+	if LastTalk != "\0\s[5]\e" && LastTalk != "\0\s[5]Гэта звычайны кот.\e"; "\0\s[0]\e:chain=curseofgod"
+	else; "\0\s[5]Гэта звычайны кот.\e"
+}
+
+curseofgod
+CHAIN{{
+	"\0\s[1]\e"
+	"\0\s[2]\e"
+	"\0\s[3]\e"
+	"\0\s[4]\e"
+	"\0\s[5]\e"
+}}CHAIN

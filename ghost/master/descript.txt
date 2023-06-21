@@ -1,0 +1,17 @@
+charset,UTF-8
+
+name,Гэта Звычайны Кот
+type,ghost
+
+shiori,yaya.dll
+
+craftman,SmokyCinnamonRoll
+craftmanw,SmokyCinnamon (Лёва)
+craftmanurl,https://smokycinnamon.github.io/indifferentsorrel/
+
+sakura.name,Звычайны Рэч
+kero.name,-
+
+icon,icon.ico
+
+sstp.allowunspecifiedsend,0

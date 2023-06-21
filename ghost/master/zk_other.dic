@@ -1,0 +1,104 @@
+OnTranslate
+{
+	_talk = reference0
+	
+	//это то, что дозволит %(встроенные_элементи) работать в ввод скрипта
+	if reference1 == "" && reference2 == "" //если это происходит от ввод скрипта
+	{ //отправить вод скрипта : нет событии (ref2) , нет флаг (ref1)
+		_talk = EVAL('"' + REPLACE(_talk,'"','""') + '"')
+	}
+	
+	//если есть что-нибудь добавить к OnTranslate, например, замена текст, я бы поставила его после этой точки. просто проверить, что он перед код TOSTR(_talk)
+	
+	TOSTR(_talk)
+}
+
+//это просто здесь, что ты можешь ссылковать веб-сайти как якорь, но обычные выбори меню ещё работает! Если так сделаешь, полезный просмотр будет в поле с текстом
+OnAnchorSelect
+{
+	if "http://" _in_ reference0 || "https://" _in_ reference0; "\j[""%(reference0)""]"
+}
+
+//горячие клавищи
+OnKeyPress
+{
+	if reference0 == "f1"; "\![open,readme]"
+	elseif reference0 == "f2"; "talk rate is %(aitalkinterval)\n\n%(LastTalk)"
+	elseif reference0 == "t"; OnAiTalk
+	elseif reference0 == "r"; OnLastTalk
+}
+
+//происходит примерно 30 секундов после конца скрипт, чтобы вернуть им к нормальные позы
+OnSurfaceRestore
+{
+	if LastTalk != "\0\s[5]Гэта звычайны кот.\e"; "\1\s[-1]\0%(LastTalk)"
+	else; "\1\s[-1]\0\s[5]"
+}
+
+//Это происходить, когда привидение было не скрытой. Тебе можно добавить диалог, но это тебе не нужно. Это событие здесь, потому что если оно нету, поверхности будут \0\s[0]\1\s[10], по умолчанию, а иногда это не хочешь. Например, если твоё привидение использовает другие поверхности, или есть другой число персонажи.
+OnWindowStateRestore
+{
+	if LastTalk != "\0\s[5]Гэта звычайны кот.\e"; "\1\s[-1]\0%(LastTalk)"
+	else; "\1\s[-1]\0\s[5]"
+}
+
+
+On_homeurl
+{
+	""
+}
+
+
+//—————————————————————————————— ссылки меню нажатие правой кнопкой ——————————————————————————————
+
+//форматировать массив попеременные названия и URL-и для использование с меню правой кнопки
+FormatLinks : all
+{
+	for _i = 0; _i < ARRAYSIZE(_argv); _i++
+	{
+		_argv[_i] //добавить ссылка / название
+		//переменнить с %ASC(1) до %ASC(2)
+		if _i % 2 == 1; "%ASC(2)"
+		else; "%ASC(1)"
+	}
+}
+
+On_sakura.recommendsites
+{
+	FormatLinks(recommendsites_sakura)
+}
+
+//это веб-сайти, ссылкованы в самый верхный настроек меню правой кнопкой у сакуры. формат - простой, налево написать название ссыка, тогда точка с запятой, а направо-ссылка. они должны быть другие строки.
+recommendsites_sakura : array
+{
+	//"название ссылка";	"https://link.example.com/link/to/whatever/here/"
+}
+
+On_sakura.portalsites 
+{
+	FormatLinks(portalsites_sakura)
+}
+
+//Той самый вещь, но для вторая кнопка
+portalsites_sakura : array
+{
+}
+
+On_kero.recommendsites
+{
+	FormatLinks(recommendsites_kero)
+}
+
+//как меню сакура, но для керо
+recommendsites_kero : array
+{
+}
+
+
+//скопирован с файли SHIORI, с добавление переменная имя
+OnNotifyUserInfo : void
+{
+	SHIORI3FW.UserName = reference[0]
+	if !нік; нік = reference[0]
+	SHIORI3FW.UserNameFull = reference[1]
+}

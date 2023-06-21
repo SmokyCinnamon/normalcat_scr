@@ -1,0 +1,5 @@
+charset,UTF-8
+type,ghost
+
+name,Гэта Звычайны Кот
+directory,normalcat_scr
